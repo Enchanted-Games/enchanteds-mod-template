@@ -25,7 +25,7 @@ stonecutter {
                 version("$version-${it.replace("_remap", "")}", version).buildscript = "build.$it.gradle.kts"
             }
 
-        // use fabric_remap as the loader for obfuscated minecraft versions (26.1 or above)
+        // use fabric_remap as the loader for obfuscated minecraft versions (1.21.11 or below)
 
         ver("1.21.11", "fabric_remap", "neoforge")
         ver("26.1", "fabric")
