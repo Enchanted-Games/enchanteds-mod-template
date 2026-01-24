@@ -8,7 +8,7 @@ plugins {
 
 val minecraft = stonecutter.current.version
 val mcVersion = stonecutter.current.project.substringBeforeLast('-')
-val accessWidenerFilepath = "src/main/resources/${property("mod.id")}.accesswidener"
+val classTweakerFilepath = "src/main/resources/${property("mod.id")}.classtweaker"
 
 version = "${property("mod.version")}+${property("deps.minecraft")}-fabric"
 base.archivesName = property("mod.id") as String
@@ -41,8 +41,8 @@ stonecutter {
 }
 
 loom {
-    if(project.file(accessWidenerFilepath).exists()) {
-        accessWidenerPath = project.file(accessWidenerFilepath)
+    if(project.file(classTweakerFilepath).exists()) {
+        accessWidenerPath = project.file(classTweakerFilepath)
     }
 
     runConfigs.all {
@@ -76,8 +76,8 @@ tasks.named<ProcessResources>("processResources") {
         this["java_ver"] = java.targetCompatibility.majorVersion
     }
 
-    if(project.file(accessWidenerFilepath).exists()) {
-        props["accesswidener_field"] = "\"accessWidener\": \"${prop("mod.id")}.accesswidener\","
+    if(project.file(classTweakerFilepath).exists()) {
+        props["accesswidener_field"] = "\"accessWidener\": \"${prop("mod.id")}.classtweaker\","
     } else {
         props["accesswidener_field"] = ""
     }

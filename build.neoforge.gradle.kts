@@ -98,7 +98,7 @@ tasks.named<ProcessResources>("processResources") {
 
 tasks {
     processResources {
-        exclude("**/fabric.mod.json", "**/*.accesswidener")
+        exclude("**/fabric.mod.json", "**/*.accesswidener", "**/*.classtweaker")
     }
 
     named("createMinecraftArtifacts") {
