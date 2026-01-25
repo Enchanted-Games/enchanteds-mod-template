@@ -16,3 +16,6 @@ This template was primarily made with my specific needs in mine, however you are
 - Change Minecraft versions in settings.gradle.kts
    - By default there are buildscripts for Fabric (remap, >=1.14), Fabric (>=26.1), and NeoForge (>1.20.2), if you need other versions you may make your own buildscripts for them
 - Use the stonecutter gradle tasks to switch between versions, run configurations should be generated automatically
+- Set up to handle ClassTweakers and AccessTransformers automatically
+   - for fabric place them under `src/main/resources/{mod id}.classtweaker`
+   - for neoforge place them under `src/main/resources/META-INF/accesstransformer.cfg`
