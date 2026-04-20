@@ -1,4 +1,8 @@
 @file:Suppress("UnstableApiUsage")
+@file:OptIn(StonecutterExperimentalAPI::class)
+
+import dev.kikugie.stonecutter.StonecutterExperimentalAPI
+
 
 plugins {
     id("net.neoforged.moddev")
@@ -9,8 +13,9 @@ plugins {
 val minecraft = stonecutter.current.version
 val mcVersion = stonecutter.current.project.substringBeforeLast('-')
 
-version = "${property("mod.version")}+${property("deps.minecraft")}-neoforge"
-base.archivesName = property("mod.id") as String
+val rawModVersion: String = sc.properties["mod.version"]
+version = "$rawModVersion+${sc.properties.get<String>("deps.minecraft")}-neoforge"
+base.archivesName = sc.properties.get<String>("mod.id")
 
 repositories {
     mavenLocal()
@@ -44,11 +49,11 @@ stonecutter {
 }
 
 neoForge {
-    version = property("deps.neoforge") as String
+    version = sc.properties.get<String>("deps.neoforge")
     validateAccessTransformers = true
 
     if (hasProperty("deps.parchment")) parchment {
-        val (mc, ver) = (property("deps.parchment") as String).split(':')
+        val (mc, ver) = sc.properties.get<String>("deps.parchment").split(':')
         mappingsVersion = ver
         minecraftVersion = mc
     }
@@ -65,7 +70,7 @@ neoForge {
     }
 
     mods {
-        register(property("mod.id") as String) {
+        register(sc.properties.get<String>("mod.id")) {
             sourceSet(sourceSets["main"])
         }
     }
@@ -73,7 +78,7 @@ neoForge {
 }
 
 tasks.named<ProcessResources>("processResources") {
-    fun prop(name: String) = project.property(name) as String
+    fun prop(name: String): String = sc.properties[name]
 
     val props = HashMap<String, String>().apply {
         this["version"] = prop("mod.version") + "+" + prop("deps.minecraft")
@@ -108,7 +113,7 @@ tasks {
     register<Copy>("buildAndCollect") {
         group = "build"
         from(jar.map { it.archiveFile })
-        into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
+        into(rootProject.layout.buildDirectory.file("libs/${rawModVersion}"))
         dependsOn("build")
     }
 }
@@ -139,8 +144,8 @@ publishMods {
 
     // one of BETA, ALPHA, STABLE
     type = STABLE
-    displayName = "[NF] v${property("mod.version")} for mc ${stonecutter.current.version}"
-    version = "${property("mod.version")}+${property("deps.minecraft")}-neoforge"
+    displayName = "[NF] v${rawModVersion} for mc ${sc.properties.get<String>("deps.minecraft")}"
+    version = project.version.toString()
     changelog = provider { rootProject.file("CHANGELOG.md").readText() }
     modLoaders.add("neoforge")
 
@@ -148,23 +153,22 @@ publishMods {
 
     if (hasProperty("publish.modrinth")) {
         modrinth {
-            projectId = property("publish.modrinth") as String
+            projectId = sc.properties.get<String>("publish.modrinth") as String
             accessToken = env.MODRINTH_API_KEY.orNull()
-            minecraftVersions.add(property("deps.minecraft").toString())
+            minecraftVersions.add(sc.properties.get<String>("deps.minecraft").toString())
             minecraftVersions.addAll(additionalVersions)
         }
     }
 
     if (hasProperty("publish.curseforge")) {
         curseforge {
-            projectId = property("publish.curseforge") as String
+            projectId = sc.properties.get<String>("publish.curseforge") as String
             accessToken = env.CURSEFORGE_API_KEY.orNull()
             minecraftVersions.add(stonecutter.current.version)
             minecraftVersions.addAll(additionalVersions)
         }
     }
 }
-
 
 
 fun bool(str: String) : Boolean {
