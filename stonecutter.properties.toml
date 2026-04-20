@@ -12,6 +12,9 @@ icon = "assets/eg_template_mod/icon.png"
 # neoforge versions: https://projects.neoforged.net/neoforged/neoforge
 # fabric versions: https://fabricmc.net/develop/
 
+[fabric]
+deps.fabric-loader = "0.18.5"
+dep_str.fabric-loader = ">=0.18"
 
 ["1.21.11"]
 deps.minecraft = "1.21.11"

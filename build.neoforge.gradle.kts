@@ -10,6 +10,9 @@ plugins {
     id("maven-publish")
 }
 
+val (versionTag, loaderTag) = sc.current.project.split('-', limit = 2)
+sc.properties.tags(versionTag, loaderTag)
+
 val minecraft = stonecutter.current.version
 val mcVersion = stonecutter.current.project.substringBeforeLast('-')
 
@@ -91,8 +94,6 @@ tasks.named<ProcessResources>("processResources") {
         this["issue_tracker"] = prop("mod.issue_tracker")
         this["icon"] = prop("mod.icon")
         this["license"] = prop("mod.license")
-        this["fabric_loader_dep_str"] = prop("dep_str.fabric-loader")
-        this["fabric_api_dep_str"] = prop("dep_str.fabric-api")
         this["java_ver"] = java.targetCompatibility.majorVersion
     }
 
@@ -155,7 +156,7 @@ publishMods {
         modrinth {
             projectId = sc.properties.get<String>("publish.modrinth") as String
             accessToken = env.MODRINTH_API_KEY.orNull()
-            minecraftVersions.add(sc.properties.get<String>("deps.minecraft").toString())
+            minecraftVersions.add(sc.properties.get<String>("deps.minecraft"))
             minecraftVersions.addAll(additionalVersions)
         }
     }
