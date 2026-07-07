@@ -11,7 +11,17 @@ import net.minecraft.network.chat.Component;
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (parent) -> new ConfirmScreen(b -> Minecraft.getInstance().setScreen(parent), Component.literal(ModConstants.MOD_NAME + " Config Placeholder"), Component.empty());
+        return (parent) -> new ConfirmScreen(
+            b -> {
+                //? if <= 26.1 {
+                /*Minecraft.getInstance().setScreen(parent);
+                *///? } else {
+                Minecraft.getInstance().gui.setScreen(parent);
+                //? }
+            },
+            Component.literal(ModConstants.MOD_NAME + " Config Placeholder"),
+            Component.empty()
+        );
     }
 }
 //?}
