@@ -5,6 +5,7 @@ description = "Multi-version, multi-loader mod template for Minecraft using Ston
 group = "games.enchanted"
 version = "1.0.0"
 license = "MIT"
+website_url = "https://enchanted.games/"
 source_url = "https://github.com/Enchanted-Games/enchanteds-mod-template"
 issue_tracker = "https://github.com/Enchanted-Games/enchanteds-mod-template/issues"
 icon = "assets/eg_template_mod/icon.png"
@@ -66,4 +67,4 @@ deps.modmenu = "20.0.0-beta.4"
 [neoforge."26.2"]
 dep_str.minecraft = "[26.2,26.3)"
 
-deps.neoforge = "26.2.0.8-beta"
+deps.neoforge = "26.2.0.59"

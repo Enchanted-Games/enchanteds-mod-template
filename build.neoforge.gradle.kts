@@ -82,6 +82,12 @@ neoForge {
 tasks.named<ProcessResources>("processResources") {
     fun prop(name: String): String = sc.properties[name]
 
+    val neoforgeIconProperty = if(stonecutter.eval(stonecutter.current.version, ">=26.2")) {
+        "iconFile"
+    } else {
+        "logoFile"
+    }
+
     val props = HashMap<String, String>().apply {
         this["version"] = prop("mod.version") + "+" + prop("deps.minecraft")
         this["minecraft"] = prop("dep_str.minecraft")
@@ -89,11 +95,13 @@ tasks.named<ProcessResources>("processResources") {
         this["group"] = prop("mod.group")
         this["description"] = prop("mod.description")
         this["name"] = prop("mod.name")
+        this["website_url"] = prop("mod.website_url")
         this["source_url"] = prop("mod.source_url")
         this["issue_tracker"] = prop("mod.issue_tracker")
         this["icon"] = prop("mod.icon")
         this["license"] = prop("mod.license")
         this["java_ver"] = java.targetCompatibility.majorVersion
+        this["neo_icon_property"] = neoforgeIconProperty
     }
 
     filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml", "META-INF/mods.toml", "*.mixins.json")) {
