@@ -28,6 +28,8 @@ Publishing is disabled by default, to enable it:
 2. Copy and paste .env.template as .env, and enter in your modrinth and/or curseforge api keys. **IMPORTANT: Keep this file private! Do not share it anywhere**
     - Modrinth: generate a [PAT](https://modrinth.com/settings/pats) with the Create, Read, and Write Versions scopes
     - Curseforge: generate an [Api Token](https://legacy.curseforge.com/account/api-tokens)
+3. Set the environment accordingly near the bottom of each build script, by default it is set up for a client side only mod
+4. Optionally set additional minecraft versions in versioned properties with `publish.additionalVersions`, separated by comma 
 
 Once set up, you can publish by:
 1. Run `./gradlew publishMods` and check the information is correct
