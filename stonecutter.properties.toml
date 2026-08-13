@@ -17,6 +17,7 @@ icon = "assets/eg_template_mod/icon.png"
 deps.fabric-loader = "0.19.3"
 dep_str.fabric-loader = ">=0.19"
 
+
 ["1.21.11"]
 deps.minecraft = "1.21.11"
 

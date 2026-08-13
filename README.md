@@ -2,7 +2,7 @@
 
 Multi-version, multi-loader mod template for Minecraft using Stonecutter, Fabric Loom, and ModDevGradle.
 
-This template is set up for Minecraft 1.21.11 (fabric & neoforge) and 26.1-snapshot-1 (fabric) by default.
+This template is set up for Minecraft 1.21.11, 26.1, and 26.2 (fabric & neoforge) by default.
 
 This template was primarily made with my specific needs in mind, however you are free to expand upon and use this as a base for your own mods
 
@@ -21,6 +21,14 @@ This template was primarily made with my specific needs in mind, however you are
 - Set up to handle ClassTweakers and AccessTransformers automatically
    - for fabric place them under `src/main/resources/{mod id}.classtweaker`
    - for neoforge place them under `src/main/resources/META-INF/accesstransformer.cfg`
+   - these should be placed under `versions/<version>`
+
+## Add or remove versions
+1. Open `settings.gradle.kts`
+2. In the stonecutter block call `ver(<mc version>, <loaders>)`
+   - supported loaders by default are `fabric`, `fabric_remap`, and `neoforge`
+   - to add new loaders you can simply make a buildscript, for example, `build.forge.gradle.kts` and pass `forge` as a loader
+3. Edit versioned properties in `stonecutter.properties.toml`
 
 ## Publishing (optional)
 Publishing is disabled by default, to enable it:
